@@ -1,7 +1,7 @@
 import asyncio
 import websockets
 import base64
-from xmlrpc.client import ServerProxy
+import xmlrpc.client
 import logging
 
 connected = set()
@@ -13,12 +13,14 @@ async def preto_e_branco(websocket, path):
   connected.add(websocket)
   try:
     async for message in websocket:
-      url_servidor = 'dddddc04-f2f9-4153-ae32-0172e5096b6f-00-gqgkds7g0wct.spock.replit.dev'
-      servidor = ServerProxy(f'https://{url_servidor}:8000')
-      
-      resposta = servidor.preto_branco(message)
+      # Criar uma conexão RPC
+      with xmlrpc.client.ServerProxy(
+          "https://dddddc04-f2f9-4153-ae32-0172e5096b6f-00-gqgkds7g0wct.spock.replit.dev:8000"
+      ) as proxy:
+        # Chamar a função RPC para converter a imagem para preto e branco
+        imagem_pb_base64 = proxy.preto_branco(message)
 
-      await websocket.send(resposta)
+      await websocket.send(imagem_pb_base64)
   finally:
     logging.debug('Conexão fechada')
     connected.remove(websocket)

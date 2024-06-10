@@ -5,7 +5,7 @@ from PIL import Image
 import io
 
 async def enviar_imagem(imagem_path):
-    url_servidor = 'wss://a24ea60f-9742-49b2-b5f2-2e7c3e3ace54-00-2dgl6x615ioyh.picard.replit.dev'
+    url_servidor = 'wss://6a19d5da-37bf-40f9-93b5-ec6df8761273-00-2m8nm1n3blvla.picard.replit.dev:3000'
     
     async with websockets.connect(url_servidor) as websocket:
         try:
@@ -20,4 +20,4 @@ async def enviar_imagem(imagem_path):
         except Exception as e:
             print(f"Erro: {e}")
             
-asyncio.run(enviar_imagem('./galaxy.jpg'))
+asyncio.run(enviar_imagem('./assets/galaxy.jpg'))
