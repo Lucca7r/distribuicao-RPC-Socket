@@ -13,7 +13,7 @@ async def enviar_imagem(imagem_path):
             await websocket.send(imagem64)
 
             resultado = await websocket.recv()
-            imagem_resultado = base64.b64decode(resultado)
+            imagem_resultado = base64.b64decode(str(resultado))
             imagemB = Image.open(io.BytesIO(imagem_resultado))
             imagemB.save("NovaImagem.jpg")
 
