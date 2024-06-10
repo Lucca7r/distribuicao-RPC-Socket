@@ -16,7 +16,7 @@ async def enviar_imagem(imagem_path):
                 resultado = await websocket.recv()
                 imagem_resultado = base64.b64decode(str(resultado))
                 imagemB = Image.open(io.BytesIO(imagem_resultado))
-                imagemB.save("NovaImagem.jpg")
+                imagemB.save("./out/NovaImagem.jpg")
         except Exception as e:
             print(f"Erro: {e}")
             
