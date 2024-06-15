@@ -7,7 +7,7 @@ url_servidor = 'dddddc04-f2f9-4153-ae32-0172e5096b6f-00-gqgkds7g0wct.spock.repli
 
 servidor = ServerProxy(f'https://{url_servidor}:8000')
 
-imagem = "./assets/galaxy.jpg"
+imagem = "../assets/galaxy.jpg"
 
 with open(imagem,"rb") as imagem_original:
   imagem64 = base64.b64encode(imagem_original.read()).decode()
