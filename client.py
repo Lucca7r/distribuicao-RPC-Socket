@@ -39,5 +39,5 @@ async def enviar_imagens(imagens_paths):
     print(f"Tempo total: {time.time() - inicio}")
 
 # Lista de caminhos das imagens a serem enviadas
-imagens_paths = ['./assets/galaxy.jpg']
+imagens_paths = ['./assets/galaxy.jpg', './assets/tigre.jpg', './assets/bigbang.jpg', './assets/unsplash (1).jpg', './assets/unsplash (2).jpg', './assets/unsplash (3).jpg', './assets/unsplash (4).jpg', './assets/unsplash (5).jpg']
 asyncio.run(enviar_imagens(imagens_paths))
