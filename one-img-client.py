@@ -5,6 +5,7 @@ from PIL import Image
 import io
 import os
 from concurrent.futures import ThreadPoolExecutor
+import time
 
 # Função para enviar um pedaço da imagem
 async def enviar_pedaco_imagem(url_servidor, pedaco_imagem, index):
@@ -38,9 +39,12 @@ def dividir_imagem(imagem_path, num_pedacos):
 
 # Função principal para processar a imagem
 async def processar_imagem(imagem_path, url_servidor, num_pedacos):
-    pedacos = dividir_imagem(imagem_path, num_pedacos)
+    loop = asyncio.get_running_loop()
+    # Utilizar ThreadPoolExecutor para executar a função dividir_imagem em uma thread separada.
+    with ThreadPoolExecutor() as executor:
+        pedacos = await loop.run_in_executor(executor, dividir_imagem, imagem_path, num_pedacos)
+    
     tasks = []
-
     for index, pedaco in enumerate(pedacos):
         with io.BytesIO() as output:
             pedaco.save(output, format="JPEG")
@@ -49,7 +53,7 @@ async def processar_imagem(imagem_path, url_servidor, num_pedacos):
             tasks.append(task)
 
     await asyncio.gather(*tasks)
-    montar_imagem("./out", "out/imagem_montada.jpg")  # Chama a função de montagem após processar todos os pedaços
+    montar_imagem("./out", "out/imagem_montada.jpg") # Chama a função de montagem após processar todos os pedaços
 
 # Função para montar a imagem a partir dos pedaços
 def montar_imagem(diretorio_pedacos, imagem_saida):
@@ -75,4 +79,7 @@ def montar_imagem(diretorio_pedacos, imagem_saida):
 
 # Exemplo de uso
 if __name__ == "__main__":
+    inicio = time.time()
     asyncio.run(processar_imagem("./assets/baloes.jpg", "wss://a24ea60f-9742-49b2-b5f2-2e7c3e3ace54-00-2dgl6x615ioyh.picard.replit.dev:3000", 4))
+    fim = time.time()
+    print(f"Tempo total: {fim - inicio}")
