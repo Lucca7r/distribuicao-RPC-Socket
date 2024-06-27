@@ -44,9 +44,7 @@ Entender o melhor funcionamento de um projeto distribuido usando threads e RPC e
 - O sistema consiste em três componentes principais:
 
     - Cliente (cliente.py): Responsável por enviar as imagens para o servidor WebSocket. Ele usa uma abordagem assíncrona e multithreading para enviar várias imagens em paralelo, acelerando o processo.
-<br>
     - Servidor RPC (rpc_img.py): Implementa uma função RPC (preto_branco) que recebe uma imagem codificada em Base64, converte-a para preto e branco e retorna a imagem processada, também em Base64.
-<br>
     - Servidor WebSocket (websocket.py): Recebe as imagens do cliente, encaminha-as para o servidor RPC para processamento e envia as imagens em preto e branco de volta para o cliente.
 <br>
 
